@@ -19,6 +19,7 @@ connect(config, mediator)
 mediator.on('db.err', err => {
   console.log(err)
 })
+
 mediator.on('db.ready', db => {
   console.log('Connected repository, init DI')
   const { dbSettings, serverSettings, errorCode, serverHelper } = config
