@@ -11,8 +11,8 @@ module.exports = function (mongoClient, { serverHelper }) {
         if (err) reject(new Error(err))
         else {
           const { result, ops } = data
-          if (ops) {
-            resolve(result)
+          if (result.ok) {
+            resolve(ops)
           } else {
             reject(new Error('Không thể thêm user.'))
           }
