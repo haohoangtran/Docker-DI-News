@@ -13,7 +13,8 @@
   },
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
