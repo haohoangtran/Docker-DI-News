@@ -36,7 +36,7 @@ const dbSettings = {
 }
 
 const serverSettings = {
-  port: process.env.PORT || 3002,
+  port: process.env.PORT || 3003,
   shakey: 'hihihaha%$%!#@!',
   version: 'v1'
 }
