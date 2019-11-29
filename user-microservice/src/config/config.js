@@ -3,7 +3,7 @@ const dbSettings = {
   user: process.env.DB_USER || 'haoht',
   pass: process.env.DB_PASS || '123456',
   repl: process.env.DB_REPLS || 'rs0',
-  servers: (process.env.DB_SERVERS) ? process.env.DB_SERVERS.split(',') : [
+  servers: (process.env.DB_SERVERS) ? process.env.DB_SERVERS.substr(1, process.env.DB_SERVERS.length - 2).split(' ') : [
     '127.0.0.1:27018'
   ],
   dbParameters: () => ({
@@ -36,7 +36,7 @@ const dbSettings = {
 }
 
 const serverSettings = {
-  port: process.env.PORT || 3001,
+  port: process.env.PORT || 3000,
   shakey: 'hihihaha%$%!#@!',
   version: 'v1'
 }
