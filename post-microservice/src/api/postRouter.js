@@ -49,9 +49,18 @@ module.exports = (app, container) => {
       res.json({ status: false, msg: 'something went wrong.', code: errorCode.DB_ERROR })
     })
   })
+  app.get(`/api/${version}/post/getByCategory/:id`, (req, res) => {
+    const { id } = req.params
+    postRepo.getPostByIdCategory(id).then(data => {
+      res.json({ status: true, data })
+    }).catch(e => {
+      logger.e(e)
+      res.json({ status: false, msg: 'something went wrong.', code: errorCode.DB_ERROR })
+    })
+  })
   app.delete(`/api/${version}/post/:id`, (req, res) => {
     const { id } = req.params
-    postRepo.deletePost(id).then(data => {
+    postRepo.deletePost(id).then(() => {
       res.json({ status: true, msg: 'success!' })
     }).catch(e => {
       logger.e(e)
