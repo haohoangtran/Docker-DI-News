@@ -17,10 +17,14 @@ Thiết kế hệ thống tin tức
 
 + Có các quyền như guest
 + Có thể thêm bài viết, chỉnh sửa, xoá bài viết của mình
-Yêu cầu của tổng biên tập:
+
+*Yêu cầu của tổng biên tập:*
+
 + Có quyền của biên tập viên
 + Có thể thêm, sửa, xoá category
+
 *Yêu cầu hệ thống:*
+
 + Có thể mở rộng theo chiều ngang khi user tăng nhiều
 
 *Phân tích yêu cầu*
