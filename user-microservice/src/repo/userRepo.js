@@ -12,9 +12,10 @@ module.exports = function (mongoClient, { serverHelper }) {
         else {
           const { result, ops } = data
           if (ops) {
-
+            resolve(result)
+          } else {
+            reject(new Error('Không thể thêm user.'))
           }
-          resolve({ result, ops })
         }
       })
     })
@@ -27,7 +28,8 @@ module.exports = function (mongoClient, { serverHelper }) {
         if (err) reject(new Error(err))
         else {
           const { name, username, createTime, _id } = data
-          resolve({ name, username, createTime, _id })
+          const user = { name, username, createTime, _id }
+          resolve(user)
         }
       })
     })
