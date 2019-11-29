@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "test": "jest",
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
