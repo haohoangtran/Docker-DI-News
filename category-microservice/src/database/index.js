@@ -1,3 +1,3 @@
 const { connect } = require('./mongo')
-const { ObjectID } = require('mongodb')
-module.exports = { connect, ObjectID }
+const { ObjectId } = require('mongodb')
+module.exports = { connect, ObjectId }

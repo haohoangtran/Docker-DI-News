@@ -4,7 +4,6 @@ module.exports = function (mongoClient, options) {
   function createIndex () {
     mongoClient.collection('categories').createIndex('name', { unique: true })
   }
-
   createIndex()
   const addCategory = (category) => {
     return new Promise((resolve, reject) => {
