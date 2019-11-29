@@ -1,6 +1,6 @@
 const { EventEmitter } = require('events')
 const mediator = new EventEmitter()
-const { connect } = require('./database')
+const { connect, ObjectId } = require('./database')
 const { config } = require('./config')
 const { initDI } = require('./di')
 const server = require('./server')
@@ -8,7 +8,7 @@ const repo = require('./repo')
 const logger = require('./logger')
 const models = require('./models')
 
-console.log('-- User service --')
+console.log('-- Category Service')
 console.log('Connecting to repository...')
 
 process.on('uncaughtException', err => {
@@ -27,7 +27,7 @@ mediator.on('db.ready', db => {
     serverSettings,
     errorCode,
     logger,
-    repo: repo.connect(db, config),
+    repo: repo.connect(db, { ...config, ObjectId }),
     models,
     serverHelper
   }, mediator)
