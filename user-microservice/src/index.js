@@ -8,6 +8,7 @@ const repo = require('./repo')
 const logger = require('./logger')
 const models = require('./models')
 
+console.log('-- User service --')
 console.log('Connecting to repository...')
 
 process.on('uncaughtException', err => {
