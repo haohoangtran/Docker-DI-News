@@ -15,11 +15,17 @@ const start = (container) => {
       reject(new Error('The server must be started with an available port'))
     }
     const app = express()
-    morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
+    morgan.token('body', function (req) { return JSON.stringify(req.body) })
     app.use(morgan(':method :url :status :response-time ms - :res[content-length] :body - :req[content-length]'))
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
     app.use(helmet())
+    app.use((req, res, next) => {
+      if (req.headers.user) {
+        req.user = JSON.parse(decodeURI(req.headers.user))
+      }
+      next()
+    })
     app.use((err, req, res, next) => {
       reject(new Error('Something went wrong!, err:' + err))
       res.status(500).send('Something went wrong!')

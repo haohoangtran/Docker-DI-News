@@ -7,7 +7,7 @@ module.exports = (app, container) => {
   app.post(`/api/${version}/category/add`, (req, res) => {
     const newCategory = req.body
     // check user co phai admin khong
-    const { user } = req.headers
+    const { user } = req
     if (!user || !user.isAdmin) {
       return res.json({ status: false, code: errorCode.ACCESS_TOKEN_DENIED })
     }
@@ -35,7 +35,7 @@ module.exports = (app, container) => {
   })
   app.delete(`/api/${version}/category/:id`, (req, res) => {
     const { id } = req.params
-    categoryRepo.deleteCategory(id).then(data => {
+    categoryRepo.deleteCategory(id).then(() => {
       res.json({ status: true, msg: 'thanh cong' })
     }).catch(e => {
       logger.e(e)
