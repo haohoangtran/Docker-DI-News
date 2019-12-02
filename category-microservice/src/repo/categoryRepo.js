@@ -2,7 +2,7 @@ module.exports = function (mongoClient, options) {
   const { ObjectId } = options
 
   function createIndex () {
-    mongoClient.createCollection('categories', { strict: true }, (error) => {
+    mongoClient.createCollection('categories', (error) => {
       if (error) {
         return console.error(error)
       }
