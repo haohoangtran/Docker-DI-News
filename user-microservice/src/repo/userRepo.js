@@ -2,7 +2,7 @@ module.exports = function (mongoClient, { serverHelper }) {
   const { encodePassword } = serverHelper
 
   function createIndex () {
-    mongoClient.createCollection('users', (error, collection) => {
+    mongoClient.createCollection('users', (error) => {
       if (error) {
         return console.error(error)
       }
@@ -34,10 +34,12 @@ module.exports = function (mongoClient, { serverHelper }) {
     return new Promise((resolve, reject) => {
       mongoClient.collection('users').findOne({ username, password }, { name: 1, username: 1 }, (err, data) => {
         if (err) reject(new Error(err))
-        else {
+        else if (data) {
           const { name, username, createTime, _id } = data
           const user = { name, username, createTime, _id }
           resolve(user)
+        } else {
+          reject(new Error('username or password doesn\'t match'))
         }
       })
     })
