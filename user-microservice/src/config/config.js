@@ -37,7 +37,7 @@ const dbSettings = {
 
 const serverSettings = {
   port: process.env.PORT || 3001,
-  shakey: 'hihihaha%$%!#@!',
+  shakey: process.env.SHA_KEY || 'hihihaha%$%!#@!',
   version: 'v1'
 }
 const errorCode = {
