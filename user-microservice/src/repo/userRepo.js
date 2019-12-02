@@ -35,8 +35,8 @@ module.exports = function (mongoClient, { serverHelper }) {
       mongoClient.collection('users').findOne({ username, password }, { name: 1, username: 1 }, (err, data) => {
         if (err) reject(new Error(err))
         else if (data) {
-          const { name, username, createTime, _id } = data
-          const user = { name, username, createTime, _id }
+          const { name, username, createTime, isAdmin, _id } = data
+          const user = { name, username, createTime, _id, isAdmin }
           resolve(user)
         } else {
           reject(new Error('username or password doesn\'t match'))

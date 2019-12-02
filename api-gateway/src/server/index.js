@@ -16,22 +16,22 @@ const start = (container) => {
     }
 
     const app = express()
-    app.use((req, res, next) => {
-      if (req.headers.token) {
-        let user = validateToken(req.headers.token)
-        if (user) {
-          req.headers.user = encodeURI(JSON.stringify(user))
-        }
-      }
-      next()
-    })
     for (let key in routes) {
       const { route, target } = routes[key]
       if (route) {
         app.use(route, proxy({
           target,
           changeOrigin: true,
-          logLevel: 'debug'
+          logLevel: 'debug',
+          onProxyReq (proxyReq, req, res) {
+            // add custom header to request
+            if (req.headers.token) {
+              let user = validateToken(req.headers.token)
+              if (user) {
+                proxyReq.setHeader('user', encodeURI(JSON.stringify(user)))
+              }
+            }
+          }
         }))
       }
     }
