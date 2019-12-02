@@ -2,7 +2,12 @@ module.exports = function (mongoClient, { serverHelper }) {
   const { encodePassword } = serverHelper
 
   function createIndex () {
-    mongoClient.collection('users').createIndex('username', { unique: true })
+    mongoClient.createCollection('users', { strict: true }, (error, collection) => {
+      if (error) {
+        return console.error(error)
+      }
+      mongoClient.collection('users').createIndex('username', { unique: true })
+    })
   }
 
   createIndex()

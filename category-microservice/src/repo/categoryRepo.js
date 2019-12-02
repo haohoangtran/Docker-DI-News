@@ -2,7 +2,12 @@ module.exports = function (mongoClient, options) {
   const { ObjectId } = options
 
   function createIndex () {
-    mongoClient.collection('categories').createIndex('name', { unique: true })
+    mongoClient.createCollection('categories', { strict: true }, (error) => {
+      if (error) {
+        return console.error(error)
+      }
+      mongoClient.collection('categories').createIndex('name', { unique: true })
+    })
   }
   createIndex()
   const addCategory = (category) => {
@@ -30,7 +35,7 @@ module.exports = function (mongoClient, options) {
   }
   const deleteCategory = (id) => {
     return new Promise((resolve, reject) => {
-      mongoClient.collection('categories').remove({ _id: new ObjectId(id) }, (err, data) => {
+      mongoClient.collection('categories').remove({ _id: new ObjectId(id) }, (err) => {
         err ? reject(new Error(err)) : resolve('ok')
       })
     })
