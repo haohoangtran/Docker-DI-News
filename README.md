@@ -45,7 +45,7 @@ Thiết kế hệ thống tin tức
 
 + Sử dụng microservice để các service ít ảnh hưởng đến nhau và ít phải chỉnh sửa
 
-+ Ở các microservice dùng redis để lưu cache 
++ Ở các microservice có thể dùng redis để lưu cache 
 
 + Có 3 microservice userservice, post service, category service
 
@@ -127,6 +127,166 @@ Ví dụ (json):
 	    "description" : "", 
 	    "createTime" : ISODate("2019-11-27T02:19:26.696+0000")
 	}
+
+
+## Chạy với docker 
+
+*.env*
+
+![docker](./img/env.png  "docker")
+
+
+*chạy user-service*
+
+![docker](./img/user.png  "docker")
+
+*chạy post-service*
+
+![docker](./img/post.png  "docker")
+
+*chạy category-service*
+
+![docker](./img/category.png  "docker")
+
+*chạy api-gateway*
+
+![docker](./img/api.png  "docker")
+
+|   Trong đó label apiRouter dùng để định danh service trong api-gateway
+
+
+**kết quả**
+
+![docker](./img/kq.png  "docker")
+
+**Log api-gateway**
+
+![docker](./img/logapi.png  "docker")
+
+
+
+##Implementation
+**Chú ý**
+
+>^Ngoại trừ UserAPI, các API còn lại cần thêm token ở header để gửi request^
+***
+
+**UserAPI**
+
+1.Đăng ký:
+
+	POST /api/v1/user/register HTTP/1.1
+	Host: localhost:3000
+	Content-Type: application/json
+	Cache-Control: no-cache
+	
+	username=haohao4&name=Ho%C3%A0ng+Tr%E1%BA%A7n+H%E1%BA%A3o+&isAdmin=false&password=12345678&repeatPassword=12345678
+	
+2.Đăng nhập
+
+	POST /api/v1/user/login HTTP/1.1
+	Host: localhost:3000
+	Content-Type: application/json
+	Cache-Control: no-cache
+
+	username=haohao4&password=12345678`
+
+**CategoryAPI**
+
+1.Thêm mới
+
+	POST /api/v1/category/add HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+	name=xahoi&displayName=X%C3%A3+h%E1%BB%99i
+	
+	
+2.Lấy category theo ID
+
+``5dddd85bd71b400ef0d1ab4a là id catagory``
+
+	GET /api/v1/category/5dddd85bd71b400ef0d1ab4a HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+	
+3.Lấy post   theo ID Category
+
+``5ddddab99843d511f40cad0e là id category``
+
+
+
+	GET /api/v1/category/getPost/5ddddab99843d511f40cad0e HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+	
+4.Xoá category 
+
+
+``5ddddab59843d511f40cad0d là id category``
+
+	DELETE /api/v1/category/5ddddab59843d511f40cad0d HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+**PostAPI**
+1.Thêm mới
+
+	POST /api/v1/post/add HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+	name=xahoi&content=Tin+xa+hoi&categories=5ddddab59843d511f40cad0d&title=tin+xa+hoi+moi 
+
+2.Lấy Post theo id
+
+``5ddddbaa52b22212ed4c0896 là id post``
+
+	GET /api/v1/post/5ddddbaa52b22212ed4c0896 HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+3.Lấy post theo IDUser
+
+``5ddce267ea485f1ed7bc2f37 là id user``
+
+	GET /api/v1/post/getByUser/5ddce267ea485f1ed7bc2f37 HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+4.Xoá post theo id
+
+``5ddddbaa52b22212ed4c0896 là id post``
+
+	DELETE /api/v1/post/5ddddbaa52b22212ed4c0896 HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+	name=xahoi&content=Tin+xa+hoi&categories=5ddddab59843d511f40cad0d
+	
+## Mở rộng
+
+Bài toán đã được chia thành các microservice không phụ thuộc lẫn nhau (DB, env, OS, ...), dễ dàng cho việc mở rộng thêm tính năng
+
+
+
 
 
 
