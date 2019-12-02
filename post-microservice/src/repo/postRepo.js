@@ -2,7 +2,12 @@ module.exports = function (mongoClient, options) {
   const { ObjectId } = options
 
   function createIndex () {
-    mongoClient.collection('posts').createIndex('name', { unique: true })
+    mongoClient.createCollection('posts', (error) => {
+      if (error) {
+        return console.error(error)
+      }
+      mongoClient.collection('posts').createIndex('name', { unique: true })
+    })
   }
 
   createIndex()
