@@ -2,7 +2,7 @@ module.exports = (app, container) => {
   const { schemaValidator } = container.resolve('models')
   const { version } = container.resolve('serverSettings')
   const logger = container.resolve('logger')
-  const { postRepo } = container.resolve('repo')
+  const postRepo = container.resolve('repo')
   const errorCode = container.resolve('errorCode')
   app.post(`/api/${version}/post/add`, (req, res) => {
     const newPost = req.body
