@@ -6,6 +6,9 @@ module.exports = (app, container) => {
   const errorCode = container.resolve('errorCode')
   app.post(`/api/${version}/post/add`, (req, res) => {
     const newPost = req.body
+    if (!req.user) {
+      return res.json({ status: false, msg: 'Need token.' })
+    }
     newPost.owner = req.user._id
     if (newPost.categories) {
       if (typeof newPost.categories !== typeof []) {
