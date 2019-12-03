@@ -23,8 +23,9 @@ const start = (container) => {
           target,
           changeOrigin: true,
           logLevel: 'debug',
-          onProxyReq (proxyReq, req, res) {
+          onProxyReq (proxyReq, req) {
             // add custom header to request
+            proxyReq.setHeader('user', '')
             if (req.headers.token) {
               let user = validateToken(req.headers.token)
               if (user) {
