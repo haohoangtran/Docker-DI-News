@@ -169,7 +169,7 @@ Ví dụ (json):
 
 
 
-##Implementation
+## Implementation
 
 **Header**
 
@@ -198,13 +198,13 @@ Ví dụ (json):
 
 *Body*
 
-|name|description|
-|--|--|
-|name| Tên user||
-|username|Tên đăng nhập|
-|password|Mật khẩu|
-|repeatPassword| Nhập lại mật khẩu|
-|isAdmin| có phải admin không|
+|name|description||type|
+|--|--|--|--|
+|name| Tên user|require|string|
+|username|Tên đăng nhập|require|/^[a-zA-Z0-9'-]+$/i|
+|password|Mật khẩu|require|string.min(8)|
+|repeatPassword| Nhập lại mật khẩu|require|string|
+|isAdmin| có phải admin không|require|string|
 
 *Ví dụ*
 
@@ -225,10 +225,10 @@ Ví dụ (json):
 
 *Body*
 
-|name|description|
-|--|--|
-|username|Tên đăng nhập|
-|password|Mật khẩu|
+|name|description||type|
+|--|--|--|--|
+|username|Tên đăng nhập|require|string|
+|password|Mật khẩu|require|string|
 
 *Ví dụ*
 
@@ -253,10 +253,10 @@ Ví dụ (json):
 
 *Body*
 
-|name|description|
-|--|--|
-|name|Tên thể loại (định danh)|
-|displayName|Tên hiển thị (Có thể multi language)|
+|name|description||type|
+|--|--|--|--|
+|name|Tên thể loại (định danh)|require|string|
+|displayName|Tên hiển thị (Có thể multi language)|require|string|
 
 *Ví dụ*
 
@@ -324,10 +324,10 @@ Ví dụ (json):
 
 **Body**
 
-|name|description|
-|--|--|
-|name|Tên thể loại (định danh)|
-|displayName|Tên hiển thị (Có thể multi language)|
+|name|description||type|
+|--|--|--|--|
+|name|Tên thể loại (định danh)|require|string
+|displayName|Tên hiển thị (Có thể multi language)|require|string|
 
 *Ví dụ*
 ``5ddddab59843d511f40cad0d là id category``
@@ -356,12 +356,12 @@ Ví dụ (json):
 
 *Body*
 
-|name|description|
-|--|--|
-|name|Tên bài viết (định danh)|
-|content|Nội dung bài viết|
-|categories|Mảng các thể loại của bài viết|
-|title|Tiêu đề của bài viết|
+|name|description||type|
+|--|--|--|--|
+|name|Tên bài viết (định danh)|require|string|
+|content|Nội dung bài viết|require|string|
+|categories|Mảng các thể loại của bài viết|require|array|
+|title|Tiêu đề của bài viết|require|string
 
 *Ví dụ*
 
@@ -461,12 +461,12 @@ Ví dụ (json):
 *Body*
 
 
-|name|description|
-|--|--|
-|name|Tên bài viết (định danh)|
-|content|Nội dung bài viết|
-|categories|Mảng các thể loại của bài viết|
-|title|Tiêu đề của bài viết|
+|name|description||type|
+|--|--|--|--|
+|name|Tên bài viết (định danh)|require|string|
+|content|Nội dung bài viết|require|string|
+|categories|Mảng các thể loại của bài viếtv
+|title|Tiêu đề của bài viết|require|string|
 
 *Ví dụ*
 
