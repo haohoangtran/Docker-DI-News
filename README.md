@@ -179,6 +179,10 @@ Ví dụ (json):
 
 ***
 
+*Chú ý*
+
+|	Các api update, delete,add cần có token 
+
 **UserAPI**
 
 
@@ -307,6 +311,34 @@ Ví dụ (json):
 	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
 	Content-Type: application/x-www-form-urlencoded
 	Cache-Control: no-cache
+	
+4.Update category
+
+|name|value|description|
+|--|--|--|
+|method| PUT||
+|host|127.0.0.1:3000|Base URL|
+|route|/api/v1/category/:id|địa chỉ route|
+|Content-Type|*application/json* hoặc *x-www-form-urlencoded*| Header request|
+|token|****|Token của user, thêm vào header|
+
+**Body**
+
+|name|description|
+|--|--|
+|name|Tên thể loại (định danh)|
+|displayName|Tên hiển thị (Có thể multi language)|
+
+*Ví dụ*
+``5ddddab59843d511f40cad0d là id category``
+
+	PUT /api/v1/category/5ddddab59843d511f40cad0d HTTP/1.1
+		Host: localhost:3000
+		token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+		Content-Type: application/x-www-form-urlencoded
+		Cache-Control: no-cache
+
+		name=xahoi&displayName=X%C3%A3+h%E1%BB%99i
 
 **PostAPI**
 
@@ -415,6 +447,40 @@ Ví dụ (json):
 	Host: localhost:3000
 	Content-Type: application/x-www-form-urlencoded
 	Cache-Control: no-cache
+	
+6.Update Post theo id
+
+|name|value|description|
+|--|--|--|
+|method| PUT||
+|host|127.0.0.1:3000|Base URL|
+|route|/api/v1/post/:id|địa chỉ route|
+|Content-Type|*application/json* hoặc *x-www-form-urlencoded*| Header request|
+|token|****|Token của user, thêm vào header|
+
+*Body*
+
+
+|name|description|
+|--|--|
+|name|Tên bài viết (định danh)|
+|content|Nội dung bài viết|
+|categories|Mảng các thể loại của bài viết|
+|title|Tiêu đề của bài viết|
+
+*Ví dụ*
+
+``5ddddab99843d511f40cad0e là id post``
+
+	PUT /api/v1/post/5ddddab99843d511f40cad0e HTTP/1.1
+	Host: localhost:3000
+	token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSG_DoG5nIFRy4bqnbiBI4bqjbyAiLCJ1c2VybmFtZSI6Imhhb2hhbzQiLCJjcmVhdGVUaW1lIjoiMjAxOS0xMS0yNlQwODoyOToyNC43MzhaIiwiX2lkIjoiNWRkY2UyNjdlYTQ4NWYxZWQ3YmMyZjM3IiwiaWF0IjoxNTc0ODE5MTA3LCJleHAiOjE1NzQ5MDU1MDd9.Au5CwlTIqR2AQfLZLMcw_3Bp8Eyvz59pWpOOuqR54W8
+	Content-Type: application/x-www-form-urlencoded
+	Cache-Control: no-cache
+
+	name=xahoi&content=Tin+xa+hoi&categories=5ddddab59843d511f40cad0d&title=tin+xa+hoi+moi 
+
+
 ## Mở rộng
 
 Bài toán đã được chia thành các microservice không phụ thuộc lẫn nhau (DB, env, OS, ...), dễ dàng cho việc mở rộng thêm tính năng
