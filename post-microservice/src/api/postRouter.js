@@ -70,4 +70,25 @@ module.exports = (app, container) => {
       res.json({ status: false, msg: 'something went wrong.', code: errorCode.DB_ERROR })
     })
   })
+  app.put(`/api/${version}/post/:id`, (req, res) => {
+    const { id } = req.params
+    if (!req.user) {
+      return res.json({ status: false, code: errorCode.ACCESS_TOKEN_DENIED })
+    }
+    const {
+      title,
+      content,
+      categories,
+      description
+    } = req.body
+    if (!title || !content || !categories) {
+      return res.json({ status: false, code: errorCode.VALIDATE_ERR })
+    }
+    postRepo.updatePost({ id, title, content, categories, description, iduser: req.user._id }).then(() => {
+      res.json({ status: true, msg: 'success!' })
+    }).catch(e => {
+      logger.e(e)
+      res.json({ status: false, msg: 'something went wrong.', code: errorCode.DB_ERROR })
+    })
+  })
 }

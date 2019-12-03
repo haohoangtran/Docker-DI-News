@@ -73,5 +73,21 @@ module.exports = function (mongoClient, options) {
       })
     })
   }
-  return { addPost, removePost, getPostById, getPostByIdUser, getPostByIdCategory, deletePost }
+  const updatePost = (post) => {
+    const { id, title, content, categories, description, iduser } = post
+    // chi cho update cua minh
+    return new Promise((resolve, reject) => {
+      mongoClient.collection('posts').updateOne({ _id: new ObjectId(id), owner: iduser }, {
+        $set: {
+          title,
+          content,
+          categories,
+          description
+        }
+      }, (err, data) => {
+        err ? reject(new Error(err)) : resolve(data)
+      })
+    })
+  }
+  return { addPost, removePost, getPostById, getPostByIdUser, getPostByIdCategory, deletePost, updatePost }
 }
