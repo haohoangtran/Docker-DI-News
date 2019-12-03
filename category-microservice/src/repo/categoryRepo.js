@@ -9,6 +9,7 @@ module.exports = function (mongoClient, options) {
       mongoClient.collection('categories').createIndex('name', { unique: true })
     })
   }
+
   createIndex()
   const addCategory = (category) => {
     return new Promise((resolve, reject) => {
@@ -40,5 +41,18 @@ module.exports = function (mongoClient, options) {
       })
     })
   }
-  return { deleteCategory, getCategoryById, addCategory }
+  const updateCategory = (category) => {
+    const { id, iduser, name, displayName } = category
+    return new Promise((resolve, reject) => {
+      mongoClient.collection('categories').updateOne({ _id: new ObjectId(id), createBy: iduser }, {
+        $set: {
+          name,
+          displayName
+        }
+      }, (err, data) => {
+        err ? reject(new Error(err)) : resolve(data)
+      })
+    })
+  }
+  return { deleteCategory, getCategoryById, addCategory, updateCategory }
 }
