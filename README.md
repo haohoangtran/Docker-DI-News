@@ -40,6 +40,10 @@ Thiết kế hệ thống tin tức
 ![Design](./img/anh.jpg  "Sơ đồ")
 
 
+**Rủi ro hệ thống**
+
+- Hệ thống này tin tưởng client, có thể xảy ra các trường hợp idcategory, idpost, idUser không tồn tại khi insert
+- Để giải quyết được điều này cần đồng bộ dữ liệu giữa các microservice ( bài toàn khác )
 
 ## Thực hiện
 
